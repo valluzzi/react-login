@@ -20,7 +20,7 @@ const SignUp = ({logo}) => {
     useEffect(() => {
             
         navigate(page)
-    },[page])
+    },[page, navigate])
     
    
     const handleSubmit = (evt) => {}

@@ -4,6 +4,7 @@ import PasswordField from "./PasswordField";
 import UsernameField      from "./UsernameField";
 import { useEffect, useState }  from "react";
 import { useNavigate } from "react-router-dom";
+import MessageField from "./MessageField";
 
 const loginurl = "/api/login"
 const forgoturl = "/api/forgot-password"
@@ -27,9 +28,9 @@ const Login = ({logo}) => {
 
         navigate(page)
 
-    },[page])
+    },[page, navigate])
 
-    const login = () => {
+    const submit = () => {
         return fetch(loginurl, {
             method: 'POST',
             headers: {
@@ -64,7 +65,7 @@ const Login = ({logo}) => {
 
         if (ValidateForm(username, password)){
             console.log(`Submitting Name ${username} ${password}`)
-            login().then(data => {
+            submit().then(data => {
                 console.log(data)
                 if (data.error){
                     setTips({text: data.msg, error:true})
@@ -104,15 +105,15 @@ const Login = ({logo}) => {
                     </Grid>
                     
                     <Grid item>
-                        <UsernameField value={username} onChange={e=>setUsername(e.target.value)} error={tips.error}/>
+                        <UsernameField value={username} onChange={e => setUsername(e.target.value)} error={tips.error}/>
                     </Grid>
 
                     <Grid item>
-                        <PasswordField value={password} onChange={e => setPassword(e.target.value)} error={tips.error} help={tips.text}/>
+                        <PasswordField value={password} onChange={e => setPassword(e.target.value)} error={tips.error} />
                     </Grid>
 
                     <Grid item>
-                        <Button variant="text" onClick={()=>setPage("/forgot-password")} >Forgot my password</Button>
+                        <Button variant="text" onClick={() => setPage("/forgot-password")} >Forgot my password</Button>
                     </Grid>
                     
                     <Grid item>
@@ -131,7 +132,10 @@ const Login = ({logo}) => {
                     <Grid item>
                         <Button fullWidth type="text" onClick={()=>setPage("/sign-up")} > Create an account </Button>
                     </Grid>
-                
+
+                    <Grid item>
+                        <MessageField text={tips.text} error={tips.error}/>
+                    </Grid>
                 
                 </Grid>   
             </Paper>

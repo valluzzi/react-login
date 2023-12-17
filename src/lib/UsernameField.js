@@ -7,6 +7,7 @@ const UsernameField = ({value, onChange, error}) => {
     return <TextField 
         label="Username" 
         name="username"
+        type="email"
         variant="outlined" 
         fullWidth 
         value= {value}

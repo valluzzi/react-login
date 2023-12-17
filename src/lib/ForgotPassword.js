@@ -1,17 +1,17 @@
 import { Grid,  Button,  Paper,  Typography, Box } from "@mui/material"
 import { LoadingButton } from '@mui/lab';
-import PasswordField from "./PasswordField";
 import UsernameField      from "./UsernameField";
 import { useEffect, useState }  from "react";
 import { useNavigate } from "react-router-dom";
+import MessageField from "./MessageField";
 
 
-const forgoturl = "/api/forgot-password"
-
-   
+const forgoturl = "/api/forgot-password"   
 
 
 const ForgotPassword = ({logo}) => {
+
+
 
     const navigate = useNavigate();
     const [username, setUsername] = useState("");
@@ -22,14 +22,26 @@ const ForgotPassword = ({logo}) => {
     useEffect(() => {
             
         navigate(page)
-    },[page])
+    },[page, navigate])
     
     const ValidateForm = (username) => {
    
-        return false;
+        return true;
     }
 
-
+    const submit = () => {
+        return fetch(forgoturl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({username: username})
+        }).then(data => data.json()).catch(err => {
+            //console.log(err)
+            setBusy(false)
+            return {error: true, msg: "Error connecting to server"}
+        })
+    }
     const handleSubmit = (evt) => {
         evt.preventDefault();
 
@@ -37,7 +49,12 @@ const ForgotPassword = ({logo}) => {
 
         if (ValidateForm(username)){
             console.log(`Submitting Name ${username}`)
-           
+            submit().then(data => {
+                console.log(data)
+                if (data.error){
+                    setTips({text: data.msg, error:true})
+                }               
+            })
         }else{
             setTips({text: "Invalid username or password", error:true})
             setBusy(false)
@@ -93,7 +110,11 @@ const ForgotPassword = ({logo}) => {
                     <Grid item>
                         <Button fullWidth type="text" onClick={()=>setPage("/")} > Back to login </Button>
                     </Grid>
-                
+
+                    <Grid item>
+                        <MessageField text={tips.text} error={tips.error}/>
+                    </Grid>
+                    
                 
                 </Grid>   
             </Paper>

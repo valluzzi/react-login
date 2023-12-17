@@ -3,7 +3,7 @@ import { IconButton, InputAdornment, TextField, Tooltip } from "@mui/material";
 import { useState } from "react";
 
 
-const PasswordField = ({value, onChange, error, help}) => {
+const PasswordField = ({value, onChange, error}) => {
 
     const [showPassword, setShowPassword] = useState(false);
     const handleChange= () => {setShowPassword(!showPassword)}
@@ -18,7 +18,7 @@ const PasswordField = ({value, onChange, error, help}) => {
         variant="outlined" 
         fullWidth value={value}
         onChange={onChange}
-        helperText= {help}
+        //helperText= {help}
         error= {error}//{loginError.error}
         autoFocus
         margin="dense"
