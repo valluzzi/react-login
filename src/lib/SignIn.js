@@ -5,6 +5,7 @@ import UsernameField      from "./UsernameField";
 import { useEffect, useState }  from "react";
 import { useNavigate } from "react-router-dom";
 import MessageField from "./MessageField";
+import background from "../assets/rect5.png"
 
 const loginurl = "/api/login"
 const forgoturl = "/api/forgot-password"
@@ -21,8 +22,6 @@ const Login = ({logo}) => {
     const [busy, setBusy] = useState(false);
     const [tips, setTips] = useState({text:"", error:false});
     const [page, setPage] = useState("")
-
-
 
     useEffect(() => {
 
@@ -84,12 +83,12 @@ const Login = ({logo}) => {
                 justifyContent="center"
                 alignItems="center"
                 minHeight="100vh"
-                //sx = {{backgroundImage:`url(${background})` }}
+                sx = {{backgroundImage:`url(${background})` }}
             >
                 <Paper elevation={10} sx={{
                     margin: "10px auto", 
                     height: "500px", 
-                    width: "600px", 
+                    width: "40%", 
                     padding:"50px", 
                     aling:"center"
                 }}>
